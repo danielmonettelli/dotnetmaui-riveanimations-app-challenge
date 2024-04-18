@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="RiveAnimations.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:riveMaui="clr-namespace:Rive.Maui;assembly=Rive.Maui">
+
+    <Grid
+        RowDefinitions="*, Auto"
+        RowSpacing="25">
+        <riveMaui:RivePlayer
+            Grid.Row="0"
+            Fit="Cover"
+            ResourceName="animatedloginscreen">
+            <riveMaui:BoolInput
+                InputName="isChecking"
+                StateMachineName="Login Machine"
+                Value="{Binding IsToggled, Source={x:Reference IsCheckingSwitch}}" />
+
+            <riveMaui:NumberInput
+                InputName="numLook"
+                StateMachineName="Login Machine"
+                Value="{Binding Value, Source={x:Reference LookSlider}}" />
+
+            <riveMaui:BoolInput
+                InputName="isHandsUp"
+                StateMachineName="Login Machine"
+                Value="{Binding IsToggled, Source={x:Reference IsHandsUpSwitch}}" />
+
+            <riveMaui:TriggerInput
+                x:Name="TrigFail"
+                InputName="trigFail"
+                StateMachineName="Login Machine" />
+
+            <riveMaui:TriggerInput
+                x:Name="TrigSuccess"
+                InputName="trigSuccess"
+                StateMachineName="Login Machine" />
+        </riveMaui:RivePlayer>
+
+        <StackLayout
+            Grid.Row="1"
+            Padding="25,0"
+            Spacing="25">
+            <HorizontalStackLayout Spacing="10">
+                <Switch x:Name="IsCheckingSwitch" />
+                <Label
+                    Text="Checking"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <Slider
+                x:Name="LookSlider"
+                IsEnabled="{Binding IsToggled, Source={x:Reference IsCheckingSwitch}}"
+                Maximum="100"
+                Minimum="0"
+                Value="0" />
+
+            <HorizontalStackLayout Spacing="10">
+                <Switch x:Name="IsHandsUpSwitch" />
+                <Label
+                    Text="Hands up"
+                    VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <Button
+                Command="{Binding FireCommand, Source={x:Reference TrigFail}}"
+                Text="Failure" />
+
+            <Button
+                Command="{Binding FireCommand, Source={x:Reference TrigSuccess}}"
+                Text="Success" />
+        </StackLayout>
+    </Grid>
+
+</ContentPage>
